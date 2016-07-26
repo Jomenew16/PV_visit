@@ -30,6 +30,41 @@ var sprite = {
 	RIGHT: 39
 };
 
+var Obstaculo = function (ymax, ymin, xmax, xmin)
+{
+	this.tope = ymax;
+	this.culo = ymin;
+	this.dcha = xmax;
+	this.izda = xmin;
+}
+
+var Mod1 = new Obstaculo (103,140,598,189);
+//var Mod2 = new Obstaculo (0,250,250,200);
+//var Mod3 = new Obstaculo (0,250,250,200);
+//var Mod4 = new Obstaculo (0,250,250,200);
+//var obstaculo2 = new Obstaculo (200,250,150,0);
+//var obstaculo3 = new Obstaculo (350,400,500,150);
+
+Obstaculo.prototype.check = function (x,y)
+{
+if (x+43 > this.izda && x < this.dcha)
+	{
+		if (y < this.culo && y + 70 > this.tope)
+		{
+			return false
+		}
+		else
+		{
+			return true
+		}
+	}
+else
+{
+	return true
+}
+
+};
+
 
 // Asigno las URL de las distintas imagenes de frente, dcha, izda t atras y pongo todos los arrays en falso
 function asignar (){
@@ -134,9 +169,12 @@ var posy=sprite.y;
 		spritedibujo=sprite.dcha[pasos()];
 };
 
+if (Mod1.check(posx,posy)){
 sprite.x=posx;
 sprite.y=posy;
 dibujar(spritedibujo);
+
+};
 
 };
 
