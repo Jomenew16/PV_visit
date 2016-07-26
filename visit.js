@@ -6,6 +6,11 @@ var fondo = {
 	fondoURL: "Imagenes/Layout/Fondo.png"
 };
 
+var info = {
+	modOK: false,
+	modURL: "Imagenes/Info/Papiro.jpg"
+};
+
 var sprite = {
 	x: 620,
 	y: 400,
@@ -156,6 +161,10 @@ fondo.fondoOK=true;
 dibujar();
 }
 
+function confirmarinfo () {
+info.ModOK=true;
+}
+
 
 
 function teclado (datos){
@@ -199,7 +208,8 @@ dibujar(spritedibujo);
 
 // Vamos a desatar acciones. Este codigo funciona. Modulos 1
 if (codigo==teclas.INTRO && !Mod1Acc.check(posx,posy)){
-	alert("ahí vamos");
+	dibujarpapiro();
+
 };
 
 
@@ -214,6 +224,13 @@ tablero = canvas.getContext("2d");
 fondo.imagen = new Image();
 fondo.imagen.src = fondo.fondoURL;
 fondo.imagen.onload = confirmarfondo;
+
+info.imagen = new Image();
+info.imagen.src = info.modURL;
+info.imagen.onload = confirmarinfo;
+
+
+
 
 //asigno y cargo las imagenes
 asignar();
@@ -255,3 +272,10 @@ sprite.OK=true;
 //tablero.drawImage(sprite.frente[1],sprite.x, sprite.y); 	
  //};
 
+function dibujarpapiro() {
+if (fondo.fondoOK && info.ModOK){
+	tablero.drawImage(fondo.imagen,0,0);
+	tablero.drawImage(info.imagen,300,200);
+};
+
+};
