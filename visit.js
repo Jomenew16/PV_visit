@@ -27,7 +27,10 @@ var sprite = {
 	UP: 38,
 	DOWN: 40,
 	LEFT: 37,
-	RIGHT: 39
+	RIGHT: 39,
+	INTRO: 13,
+	ESC: 27,
+	DEL: 8
 };
 
 var Obstaculo = function (ymax, ymin, xmax, xmin)
@@ -39,6 +42,7 @@ var Obstaculo = function (ymax, ymin, xmax, xmin)
 }
 
 var Mod1 = new Obstaculo (103,130,598,189);
+var Mod1Acc= new Obstaculo (130,131, 500, 289);
 var Mod2 = new Obstaculo (232,262,616,207);
 var Mod3 = new Obstaculo (367,397,597,189);
 var Mod4 = new Obstaculo (500,533,616,207);
@@ -126,7 +130,7 @@ sprite.izda[2].onload=function(){	sprite.izdaOK[2]=true;};
 
 };
 
-//devuelve valores entre 0 y 2
+//devuelve valores entre 0 y 2- Closure
 function caminar(){
 var paso=0;
 
@@ -152,13 +156,7 @@ fondo.fondoOK=true;
 dibujar();
 }
 
-function verificarimagenes(){
-	for (i=0; i<3;i++){
-		if (!sprite.frenteOK[i] || !sprite.dchaOK[i] || !sprite.izdaOK[i] || !sprite.atrasOK[i]){
-			sprite.OK=false;
-		};
-	};
-};
+
 
 function teclado (datos){
 
@@ -166,6 +164,8 @@ var codigo = datos.keyCode;
 var spritedibujo= sprite.frente[0];
 var posx=sprite.x;
 var posy=sprite.y;
+
+
 
 	if (codigo==teclas.UP){
 		spritedibujo = sprite.atras[pasos()];
@@ -187,6 +187,8 @@ var posy=sprite.y;
 		spritedibujo=sprite.dcha[pasos()];
 };
 
+
+
 //comprobar obstaculos es la función que me devuelve falso si estamos dentro de algún obstaculo
 if (comprobarObstaculos(posx,posy)){
 sprite.x=posx;
@@ -194,6 +196,12 @@ sprite.y=posy;
 dibujar(spritedibujo);
 
 };
+
+// Vamos a desatar acciones. Este codigo funciona. Modulos 1
+if (codigo==teclas.INTRO && !Mod1Acc.check(posx,posy)){
+	alert("ahí vamos");
+};
+
 
 };
 
@@ -215,6 +223,14 @@ document.addEventListener("keydown",teclado);
 
 
 
+};
+
+function verificarimagenes(){
+	for (i=0; i<3;i++){
+		if (!sprite.frenteOK[i] || !sprite.dchaOK[i] || !sprite.izdaOK[i] || !sprite.atrasOK[i]){
+			sprite.OK=false;
+		};
+	};
 };
 
 function dibujar (personaje) {
