@@ -38,13 +38,23 @@ var Obstaculo = function (ymax, ymin, xmax, xmin)
 	this.izda = xmin;
 }
 
-var Mod1 = new Obstaculo (103,140,598,189);
-var Mod2 = new Obstaculo (232,272,616,207);
-var Mod3 = new Obstaculo (367,407,597,189);
-var Mod4 = new Obstaculo (500,543,616,207);
+var Mod1 = new Obstaculo (103,130,598,189);
+var Mod2 = new Obstaculo (232,262,616,207);
+var Mod3 = new Obstaculo (367,397,597,189);
+var Mod4 = new Obstaculo (500,533,616,207);
+var Meteo = new Obstaculo (458,488,148,134);
+var Linea = new Obstaculo (0,90,710,623);
+var Arbol = new Obstaculo (99,163,769,711);
+var Inv1 = new Obstaculo (166,190,738,684);
+var Caset = new Obstaculo (279,328,829,730);
+var Inv2 = new Obstaculo (435,459,763,709);
+var Bordiz1 = new Obstaculo (0,600,122,0);
+var Bordiz2 = new Obstaculo (0,165,150,0);
+var Bordsup = new Obstaculo (0,1,835,0);
+var Bordch = new Obstaculo (0,600,835,834);
+var Bordinf = new Obstaculo (599,600,835,0);
 
-//var obstaculo2 = new Obstaculo (200,250,150,0);
-//var obstaculo3 = new Obstaculo (350,400,500,150);
+ 
 
 Obstaculo.prototype.check = function (x,y)
 {
@@ -68,7 +78,7 @@ else
 
 
 function comprobarObstaculos (x,y){
-	var check= Mod1.check(x,y) * Mod2.check(x,y)* Mod3.check(x,y)* Mod4.check(x,y);
+	var check= Mod1.check(x,y) * Mod2.check(x,y)* Mod3.check(x,y)* Mod4.check(x,y)* Meteo.check(x,y)*Linea.check(x,y)*Arbol.check(x,y)*Inv1.check(x,y)*Caset.check(x,y)*Inv2.check(x,y)*Bordiz1.check(x,y)*Bordiz2.check(x,y)*Bordsup.check(x,y)*Bordch.check(x,y)*Bordinf.check(x,y);
 	
 	return check;
 }
