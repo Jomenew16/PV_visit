@@ -73,6 +73,27 @@ sprite.izda[2].onload=function(){	sprite.izdaOK[2]=true;};
 
 };
 
+//devuelve valores entre 0 y 2
+function caminar(){
+var paso=0;
+
+	function unpaso (){
+		if (paso==2){
+			paso=0;
+		}
+		else {
+			paso = paso + 1;
+			
+		}
+		//alert("llevo"+" "+paso);
+		return paso;
+	}
+
+	return unpaso;
+};
+var pasos = caminar();
+// tengo que hacer la asignación en global. Si no, no funciona. ¿Qué gracia entonces??
+
 function confirmarfondo () {
 fondo.fondoOK=true;
 dibujar();
@@ -94,21 +115,23 @@ var posx=sprite.x;
 var posy=sprite.y;
 
 	if (codigo==teclas.UP){
-		spritedibujo=sprite.atras[0];
+		spritedibujo = sprite.atras[pasos()];
+		
+		//spritedibujo=sprite.atras[0];
 		posy-=sprite.velocidad;
 	};
 
 	if (codigo==teclas.DOWN){
-		spritedibujo=sprite.frente[0];
+		spritedibujo=sprite.frente[pasos()];
 		posy+=sprite.velocidad;
 	};
 	if (codigo == teclas.LEFT){
 		posx -= sprite.velocidad
-		spritedibujo=sprite.izda[0];
+		spritedibujo=sprite.izda[pasos()];
 	};
 	if (codigo == teclas.RIGHT){
 		posx += sprite.velocidad;
-		spritedibujo=sprite.dcha[0];
+		spritedibujo=sprite.dcha[pasos()];
 };
 
 sprite.x=posx;
