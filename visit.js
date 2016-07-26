@@ -7,8 +7,8 @@ var fondo = {
 };
 
 var sprite = {
-	x: 400,
-	y: 500,
+	x: 620,
+	y: 400,
 	velocidad: 10,
 	OK: true,	
 	frente : new Array(3),
@@ -39,17 +39,18 @@ var Obstaculo = function (ymax, ymin, xmax, xmin)
 }
 
 var Mod1 = new Obstaculo (103,140,598,189);
-//var Mod2 = new Obstaculo (0,250,250,200);
-//var Mod3 = new Obstaculo (0,250,250,200);
-//var Mod4 = new Obstaculo (0,250,250,200);
+var Mod2 = new Obstaculo (232,272,616,207);
+var Mod3 = new Obstaculo (367,407,597,189);
+var Mod4 = new Obstaculo (500,543,616,207);
+
 //var obstaculo2 = new Obstaculo (200,250,150,0);
 //var obstaculo3 = new Obstaculo (350,400,500,150);
 
 Obstaculo.prototype.check = function (x,y)
 {
-if (x+43 > this.izda && x < this.dcha)
+if (x+32 > this.izda && x+12 < this.dcha)
 	{
-		if (y < this.culo && y + 70 > this.tope)
+		if (y < this.culo && y + 65 > this.tope)
 		{
 			return false
 		}
@@ -64,6 +65,13 @@ else
 }
 
 };
+
+
+function comprobarObstaculos (x,y){
+	var check= Mod1.check(x,y) * Mod2.check(x,y)* Mod3.check(x,y)* Mod4.check(x,y);
+	
+	return check;
+}
 
 
 // Asigno las URL de las distintas imagenes de frente, dcha, izda t atras y pongo todos los arrays en falso
@@ -169,7 +177,8 @@ var posy=sprite.y;
 		spritedibujo=sprite.dcha[pasos()];
 };
 
-if (Mod1.check(posx,posy)){
+//comprobar obstaculos es la función que me devuelve falso si estamos dentro de algún obstaculo
+if (comprobarObstaculos(posx,posy)){
 sprite.x=posx;
 sprite.y=posy;
 dibujar(spritedibujo);
