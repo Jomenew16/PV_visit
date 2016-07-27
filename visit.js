@@ -8,8 +8,22 @@ var fondo = {
 
 var info = {
 	modOK: false,
-	modURL: "Imagenes/Info/Papiro.jpg"
+	modURL: "Imagenes/Info/Modules1.jpg"
 };
+
+var bocadillo = {
+	izdaOK: false,
+	izdaURL: "Imagenes/Info/Gnome.png",
+	izda2OK: false,
+	izda2URL: "Imagenes/Info/Fresh.png",
+	arribaOK: false,
+	arribaURL: "Imagenes/Info/Future.png",
+	dchaOK: false,
+	dchaURL: "Imagenes/Info/Tomorrow.png",
+	abajoOK: false,
+	abajoURL: "Imagenes/Info/Go.png"
+
+}
 
 var sprite = {
 	x: 620,
@@ -49,8 +63,11 @@ var Obstaculo = function (ymax, ymin, xmax, xmin)
 var Mod1 = new Obstaculo (103,130,598,189);
 var Mod1Acc= new Obstaculo (130,131, 500, 289);
 var Mod2 = new Obstaculo (232,262,616,207);
+var Mod2Acc= new Obstaculo (162,163, 516, 307);
 var Mod3 = new Obstaculo (367,397,597,189);
+var Mod3Acc= new Obstaculo (397,398, 500, 289);
 var Mod4 = new Obstaculo (500,533,616,207);
+var Mod4Acc= new Obstaculo (533,534, 500, 307);
 var Meteo = new Obstaculo (458,488,148,134);
 var Linea = new Obstaculo (0,90,710,623);
 var Arbol = new Obstaculo (99,163,769,711);
@@ -59,7 +76,7 @@ var Caset = new Obstaculo (279,328,829,730);
 var Inv2 = new Obstaculo (435,459,763,709);
 var Bordiz1 = new Obstaculo (0,600,122,0);
 var Bordiz2 = new Obstaculo (0,165,150,0);
-var Bordsup = new Obstaculo (0,1,835,0);
+var Bordsup = new Obstaculo (-20,-10,835,0);
 var Bordch = new Obstaculo (0,600,835,834);
 var Bordinf = new Obstaculo (599,600,835,0);
 
@@ -93,7 +110,7 @@ function comprobarObstaculos (x,y){
 }
 
 
-// Asigno las URL de las distintas imagenes de frente, dcha, izda t atras y pongo todos los arrays en falso
+	// Asigno las URL de las distintas imagenes de frente, dcha, izda t atras y pongo todos los arrays en falso
 function asignar (){
 	
 	for (i=0; i<3; i++){
@@ -163,7 +180,27 @@ dibujar();
 
 function confirmarinfo () {
 info.ModOK=true;
-}
+};
+
+function confirmarbociz1 () {
+bocadillo.izdaOK=true;
+};
+
+function confirmarbociz2 () {
+bocadillo.izda2OK=true;
+};
+
+function confirmarbocarrib () {
+bocadillo.arribaOK=true;
+};
+
+function confirmarbocdch () {
+bocadillo.dchaOK=true;
+};
+
+function confirmarbocab () {
+bocadillo.abajoOK=true;
+};
 
 
 
@@ -199,15 +236,30 @@ var posy=sprite.y;
 
 
 //comprobar obstaculos es la función que me devuelve falso si estamos dentro de algún obstaculo
-if (comprobarObstaculos(posx,posy)){
-sprite.x=posx;
-sprite.y=posy;
-dibujar(spritedibujo);
+	if (comprobarObstaculos(posx,posy)){
+	sprite.x=posx;
+	sprite.y=posy;
+	dibujar(spritedibujo);
+	}
+	else if (!Bordiz1.check(posx,posy)){
+	dibujarlimizdo1(spritedibujo);
+	}
+	else if (!Bordiz2.check(posx,posy)){
+	dibujarlimizdo2(spritedibujo);
+	}
+	else if (!Bordsup.check(posx,posy)){
+	dibujarlimsup(spritedibujo);
+	}
+	else if (!Bordch.check(posx,posy)){
+	dibujarlimdch(spritedibujo);
+	}
+	else if (!Bordinf.check(posx,posy)){
+	dibujarliminf(spritedibujo);
+	};
 
-};
 
 // Vamos a desatar acciones. Este codigo funciona. Modulos 1
-if (codigo==teclas.INTRO && !Mod1Acc.check(posx,posy)){
+if (codigo==teclas.INTRO && (Mod1Acc.check(posx,posy) || Mod2Acc.check(posx,posy) || Mod3Acc.check(posx,posy) || Mod4Acc.check(posx,posy))){
 	dibujarpapiro();
 
 };
@@ -229,7 +281,26 @@ info.imagen = new Image();
 info.imagen.src = info.modURL;
 info.imagen.onload = confirmarinfo;
 
+bocadillo.izda = new Image();
+bocadillo.izda.src = bocadillo.izdaURL;
+bocadillo.izda.onload = confirmarbociz1;
 
+bocadillo.izda2 = new Image();
+bocadillo.izda2.src = bocadillo.izda2URL;
+bocadillo.izda2.onload = confirmarbociz2;
+
+bocadillo.arriba = new Image();
+bocadillo.arriba.src = bocadillo.arribaURL;
+bocadillo.arriba.onload = confirmarbocarrib;
+
+
+bocadillo.dcha = new Image();
+bocadillo.dcha.src = bocadillo.dchaURL;
+bocadillo.dcha.onload = confirmarbocdch;
+
+bocadillo.abajo= new Image();
+bocadillo.abajo.src = bocadillo.abajoURL;
+bocadillo.abajo.onload = confirmarbocab;
 
 
 //asigno y cargo las imagenes
@@ -272,10 +343,83 @@ sprite.OK=true;
 //tablero.drawImage(sprite.frente[1],sprite.x, sprite.y); 	
  //};
 
+
+//aquí dibujar a información queda preparar toda la info!!
+
 function dibujarpapiro() {
 if (fondo.fondoOK && info.ModOK){
 	tablero.drawImage(fondo.imagen,0,0);
-	tablero.drawImage(info.imagen,300,200);
+	tablero.drawImage(info.imagen,100,50);
 };
 
 };
+
+
+
+
+
+
+// abajo se dibujan todos los comentarios de los límites
+function dibujarlimizdo1(personaje) {
+
+if (fondo.fondoOK && bocadillo.izdaOK){
+	tablero.drawImage(fondo.imagen,0,0);
+	tablero.drawImage(personaje, sprite.x, sprite.y);
+	tablero.drawImage(bocadillo.izda,sprite.x + 10,sprite.y - 170);
+	};
+
+};
+
+function dibujarlimizdo2(personaje) {
+
+if (fondo.fondoOK && bocadillo.izda2OK){
+	tablero.drawImage(fondo.imagen,0,0);
+	tablero.drawImage(personaje, sprite.x, sprite.y);
+	tablero.drawImage(bocadillo.izda,sprite.x + 15,sprite.y);
+	};
+
+};
+
+function dibujarlimizdo2(personaje) {
+
+if (fondo.fondoOK && bocadillo.izda2OK){
+	tablero.drawImage(fondo.imagen,0,0);
+	tablero.drawImage(personaje, sprite.x, sprite.y);
+	tablero.drawImage(bocadillo.izda2,sprite.x + 20,sprite.y);
+	};
+
+};
+
+
+function dibujarlimsup(personaje) {
+
+if (fondo.fondoOK && bocadillo.arribaOK){
+	tablero.drawImage(fondo.imagen,0,0);
+	tablero.drawImage(personaje, sprite.x, sprite.y);
+	tablero.drawImage(bocadillo.arriba,sprite.x -210,sprite.y);
+	};
+
+};
+
+function dibujarlimdch(personaje) {
+
+if (fondo.fondoOK && bocadillo.dchaOK){
+	tablero.drawImage(fondo.imagen,0,0);
+	tablero.drawImage(personaje, sprite.x, sprite.y);
+	tablero.drawImage(bocadillo.dcha,sprite.x -110,sprite.y-130);
+	};
+
+};
+
+function dibujarliminf(personaje) {
+
+if (fondo.fondoOK && bocadillo.abajoOK){
+	tablero.drawImage(fondo.imagen,0,0);
+	tablero.drawImage(personaje, sprite.x, sprite.y);
+	tablero.drawImage(bocadillo.abajo,sprite.x-90,sprite.y-150);
+	};
+
+};
+
+	
+	
