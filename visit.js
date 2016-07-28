@@ -268,7 +268,7 @@ var posy=sprite.y;
 	};
 
 
-// Vamos a desatar acciones. Este codigo funciona. Modulos 1
+// Vamos a desatar acciones. 
 if (codigo==teclas.INTRO && (!Mod1Acc.check(posx,posy) || !Mod2Acc.check(posx,posy) || !Mod3Acc.check(posx,posy))){
 	info.contintr =info.contintr+1;
 	dibujarpapiro(info.contintr);
