@@ -6,9 +6,14 @@ var fondo = {
 	fondoURL: "Imagenes/Layout/Fondo.png"
 };
 
+
+
 var info = {
 	modOK: false,
-	modURL: "Imagenes/Info/Modules1.jpg"
+	modURL: "Imagenes/Info/Modules1.png",
+	mod2OK: false,
+	mod2URL: "Imagenes/Info/Modules2.png",
+	contintr: 0
 };
 
 var bocadillo = {
@@ -182,6 +187,10 @@ function confirmarinfo () {
 info.ModOK=true;
 };
 
+function confirmarinfo2 () {
+info.Mod2OK=true;
+};
+
 function confirmarbociz1 () {
 bocadillo.izdaOK=true;
 };
@@ -236,7 +245,8 @@ var posy=sprite.y;
 
 
 //comprobar obstaculos es la función que me devuelve falso si estamos dentro de algún obstaculo
-	if (comprobarObstaculos(posx,posy)){
+	if (comprobarObstaculos(posx,posy) && (codigo!=teclas.INTRO)){
+	info.contintr=0;
 	sprite.x=posx;
 	sprite.y=posy;
 	dibujar(spritedibujo);
@@ -260,7 +270,9 @@ var posy=sprite.y;
 
 // Vamos a desatar acciones. Este codigo funciona. Modulos 1
 if (codigo==teclas.INTRO && (Mod1Acc.check(posx,posy) || Mod2Acc.check(posx,posy) || Mod3Acc.check(posx,posy) || Mod4Acc.check(posx,posy))){
-	dibujarpapiro();
+	info.contintr =info.contintr+1;
+	dibujarpapiro(info.contintr);
+	//console.log(info.contintr);
 
 };
 
@@ -277,9 +289,13 @@ fondo.imagen = new Image();
 fondo.imagen.src = fondo.fondoURL;
 fondo.imagen.onload = confirmarfondo;
 
-info.imagen = new Image();
-info.imagen.src = info.modURL;
-info.imagen.onload = confirmarinfo;
+info.mod1 = new Image();
+info.mod1.src = info.modURL;
+info.mod1.onload = confirmarinfo;
+
+info.mod2 = new Image();
+info.mod2.src = info.mod2URL;
+info.mod2.onload = confirmarinfo2;
 
 bocadillo.izda = new Image();
 bocadillo.izda.src = bocadillo.izdaURL;
@@ -346,10 +362,17 @@ sprite.OK=true;
 
 //aquí dibujar a información queda preparar toda la info!!
 
-function dibujarpapiro() {
-if (fondo.fondoOK && info.ModOK){
+function dibujarpapiro(c) {
+
+if (fondo.fondoOK && info.ModOK && info.Mod2OK){
 	tablero.drawImage(fondo.imagen,0,0);
-	tablero.drawImage(info.imagen,100,50);
+	if (c==1){
+	tablero.drawImage(info.mod1,100,50);	
+	}
+	else if (c==2){
+	tablero.drawImage(info.mod2,100,50);		
+	};	
+	
 };
 
 };
