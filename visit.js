@@ -66,13 +66,12 @@ var Obstaculo = function (ymax, ymin, xmax, xmin)
 }
 
 var Mod1 = new Obstaculo (103,130,598,189);
-var Mod1Acc= new Obstaculo (130,131, 500, 289);
+var Mod1Acc= new Obstaculo (129,131, 550, 230);
 var Mod2 = new Obstaculo (232,262,616,207);
-var Mod2Acc= new Obstaculo (162,163, 516, 307);
+var Mod2Acc= new Obstaculo (261,280, 616, 207);
 var Mod3 = new Obstaculo (367,397,597,189);
-var Mod3Acc= new Obstaculo (397,398, 500, 289);
+var Mod3Acc= new Obstaculo (396,405, 500, 289);
 var Mod4 = new Obstaculo (500,533,616,207);
-var Mod4Acc= new Obstaculo (533,534, 500, 307);
 var Meteo = new Obstaculo (458,488,148,134);
 var Linea = new Obstaculo (0,90,710,623);
 var Arbol = new Obstaculo (99,163,769,711);
@@ -217,6 +216,7 @@ function teclado (datos){
 
 var codigo = datos.keyCode;
 var spritedibujo= sprite.frente[0];
+
 var posx=sprite.x;
 var posy=sprite.y;
 
@@ -269,7 +269,7 @@ var posy=sprite.y;
 
 
 // Vamos a desatar acciones. Este codigo funciona. Modulos 1
-if (codigo==teclas.INTRO && (Mod1Acc.check(posx,posy) || Mod2Acc.check(posx,posy) || Mod3Acc.check(posx,posy) || Mod4Acc.check(posx,posy))){
+if (codigo==teclas.INTRO && (!Mod1Acc.check(posx,posy) || !Mod2Acc.check(posx,posy) || !Mod3Acc.check(posx,posy))){
 	info.contintr =info.contintr+1;
 	dibujarpapiro(info.contintr);
 	//console.log(info.contintr);
@@ -370,7 +370,8 @@ if (fondo.fondoOK && info.ModOK && info.Mod2OK){
 	tablero.drawImage(info.mod1,100,50);	
 	}
 	else if (c==2){
-	tablero.drawImage(info.mod2,100,50);		
+	tablero.drawImage(info.mod2,100,50);
+	info.contintr=1;		
 	};	
 	
 };
