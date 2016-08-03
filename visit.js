@@ -3,16 +3,16 @@
 var tablero;
 var fondo = {
 	fondoOK: false,
-	fondoURL: "Imagenes/Layout/Fondo.png"
+	fondoURL: "Imagenes/Layout/Fondo.jpg"
 };
 
 
 
 var info = {
 	modOK: false,
-	modURL: "Imagenes/Info/Modules1.png",
+	modURL: "Imagenes/Info/Modulest1.png",
 	mod2OK: false,
-	mod2URL: "Imagenes/Info/Modules2.png",
+	mod2URL: "Imagenes/Info/Modulest2.png",
 	contintr: 0
 };
 
