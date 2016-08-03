@@ -11,10 +11,20 @@ var fondo = {
 var info = {
 	papiroOK: false,
 	papiroURL: "Imagenes/Info/Papiro.png",
-	modOK: false,
-	modURL: "Imagenes/Info/Modulest1.png",
-	mod2OK: false,
-	mod2URL: "Imagenes/Info/Modulest2.png",
+	mod: new Array(8),
+	modOK: new Array(8),
+	inv: new Array(3),
+	invOK: new Array(3),
+	center: new Array(2),
+	centerOK: new Array(2),
+	meteoOK:false,
+	meteoURL: "Imagenes/Info/Meteo1.png",
+	lineaOK:false,
+	lineaURL: "Imagenes/Info/Infraestructuras1.png",
+	//modOK: false,
+	//modURL: "Imagenes/Info/Modulest1.png",
+	//mod2OK: false,
+	//mod2URL: "Imagenes/Info/Modulest2.png",
 	contintr: 0
 };
 
@@ -75,16 +85,22 @@ var Mod3 = new Obstaculo (367,397,597,189);
 var Mod3Acc= new Obstaculo (396,405, 500, 289);
 var Mod4 = new Obstaculo (500,533,616,207);
 var Meteo = new Obstaculo (458,488,148,134);
+var MeteoAcc = new Obstaculo (448,498,158,124);
 var Linea = new Obstaculo (0,90,710,623);
+var LineaAcc = new Obstaculo (0,100,720,613);
 var Arbol = new Obstaculo (99,163,769,711);
 var Inv1 = new Obstaculo (166,190,738,684);
+var Inv1Acc =new Obstaculo (156,200,748,674)
 var Caset = new Obstaculo (279,328,829,730);
+var CasetAcc = new Obstaculo (269,338,839,720);
 var Inv2 = new Obstaculo (435,459,763,709);
+var Inv2Acc = new Obstaculo (425,469,773,699);
 var Bordiz1 = new Obstaculo (0,600,122,0);
 var Bordiz2 = new Obstaculo (0,165,150,0);
 var Bordsup = new Obstaculo (-20,-10,835,0);
 var Bordch = new Obstaculo (0,600,835,834);
 var Bordinf = new Obstaculo (599,600,835,0);
+//var CivAcc = new Obstaculo (167,238,314,267);
 
  
 
@@ -119,6 +135,7 @@ function comprobarObstaculos (x,y){
 	// Asigno las URL de las distintas imagenes de frente, dcha, izda t atras y pongo todos los arrays en falso
 function asignar (){
 	
+	// asignamos URL a los sprites
 	for (i=0; i<3; i++){
 		
 		sprite.frenteOK[i]=false;
@@ -139,6 +156,30 @@ function asignar (){
 
 	};
 
+	//asignamos URL a la info de los modulos
+	for (k=1; k<9; k++){
+		info.modOK[k]=false;
+		info.mod[k]=new Image();
+		info.mod[k].src= "Imagenes/Info/Modulest"+k+".png";
+
+	};
+
+	//asignamos URL a la info de los inversores
+	 for (h=1; h<4; h++){
+	 	info.invOK[h]=false;
+	 	info.inv[h]= new Image();
+	 	info.inv[h].src= "Imagenes/Info/Inverterst"+h+".png";
+	 	
+	 };
+
+	 //asignamos URL a la info de la caseta
+	 for (j=1; j<3; j++){
+	 	info.centerOK[j]=false;
+	 	info.center[j]= new Image();
+	 	info.center[j].src= "Imagenes/Info/CCenter"+j+".png";
+	 	
+	 };
+
 //confirmo carga de imagenes
 sprite.frente[0].onload=function(){	sprite.frenteOK[0]=true;dibujar();};
 sprite.frente[1].onload=function(){	sprite.frenteOK[1]=true;};
@@ -155,6 +196,22 @@ sprite.atras[2].onload=function(){	sprite.atrasOK[2]=true;};
 sprite.izda[0].onload=function(){	sprite.izdaOK[0]=true;};
 sprite.izda[1].onload=function(){	sprite.izdaOK[1]=true;};
 sprite.izda[2].onload=function(){	sprite.izdaOK[2]=true;};
+
+info.mod[1].onload= function(){ info.modOK[1]=true;};
+info.mod[2].onload= function(){ info.modOK[2]=true;};
+info.mod[3].onload= function(){ info.modOK[3]=true;};
+info.mod[4].onload= function(){ info.modOK[4]=true;};
+info.mod[5].onload= function(){ info.modOK[5]=true;};
+info.mod[6].onload= function(){ info.modOK[6]=true;};
+info.mod[7].onload= function(){ info.modOK[7]=true;};
+info.mod[8].onload= function(){ info.modOK[8]=true;};
+
+info.inv[1].onload= function(){ info.invOK[1]=true;};
+info.inv[2].onload= function(){ info.invOK[2]=true;};
+info.inv[3].onload= function(){ info.invOK[3]=true;};
+
+info.center[1].onload= function(){ info.centerOK[1]=true;};
+info.center[2].onload= function(){ info.centerOK[2]=true;};
 
 };
 
@@ -184,13 +241,16 @@ fondo.fondoOK=true;
 dibujar();
 }
 
-function confirmarinfo () {
-info.ModOK=true;
+function confirmarmeteo () {
+info.meteoOK=true;
 };
 
-function confirmarinfo2 () {
-info.Mod2OK=true;
+function confirmarlinea () {
+info.lineaOK=true;
 };
+//function confirmarinfo2 () {
+//info.Mod2OK=true;
+//};
 
 function confirmarpapiro () {
 info.papiroOK=true;
@@ -277,9 +337,35 @@ var posy=sprite.y;
 // Vamos a desatar acciones. 
 if (codigo==teclas.INTRO && (!Mod1Acc.check(posx,posy) || !Mod2Acc.check(posx,posy) || !Mod3Acc.check(posx,posy))){
 	info.contintr =info.contintr+1;
-	dibujarpapiro(info.contintr);
+	infomodulo(info.contintr);
 	//console.log(info.contintr);
+};
 
+if (codigo==teclas.INTRO && (!Inv1Acc.check(posx,posy) || !Inv2Acc.check(posx,posy))){
+	info.contintr =info.contintr+1;
+	infoinverter(info.contintr);
+	//console.log(info.contintr);
+};
+
+if (codigo==teclas.INTRO && (!CasetAcc.check(posx,posy))){
+	info.contintr =info.contintr+1;
+	infocenter(info.contintr);
+	//infoinverter(info.contintr);
+	
+};
+
+if (codigo==teclas.INTRO && (!MeteoAcc.check(posx,posy))){
+	info.contintr =info.contintr+1;
+	infometeo(info.contintr);
+	//infocenter(info.contintr);
+	//infoinverter(info.contintr);
+};
+
+if (codigo==teclas.INTRO && (!LineaAcc.check(posx,posy))){
+	info.contintr =info.contintr+1;
+	infolinea(info.contintr);
+	//infocenter(info.contintr);
+	//infoinverter(info.contintr);
 };
 
 
@@ -295,13 +381,17 @@ fondo.imagen = new Image();
 fondo.imagen.src = fondo.fondoURL;
 fondo.imagen.onload = confirmarfondo;
 
-info.mod1 = new Image();
-info.mod1.src = info.modURL;
-info.mod1.onload = confirmarinfo;
+info.meteo = new Image();
+info.meteo.src = info.meteoURL;
+info.meteo.onload = confirmarmeteo;
 
-info.mod2 = new Image();
-info.mod2.src = info.mod2URL;
-info.mod2.onload = confirmarinfo2;
+info.linea = new Image();
+info.linea.src = info.lineaURL;
+info.linea.onload = confirmarlinea;
+
+//info.mod2 = new Image();
+//info.mod2.src = info.mod2URL;
+//info.mod2.onload = confirmarinfo2;
 
 info.papiro = new Image();
 info.papiro.src = info.papiroURL;
@@ -372,26 +462,70 @@ sprite.OK=true;
 
 //aquí dibujar a información queda preparar toda la info!!
 
-function dibujarpapiro(c) {
+function infomodulo(c) {
 
-if (fondo.fondoOK && info.ModOK && info.Mod2OK && info.papiroOK){
+if (fondo.fondoOK && info.modOK[1] && info.modOK[2] && info.modOK[3] && info.modOK[4] && info.modOK[5] && info.modOK[6] && info.modOK[7] && info.modOK[8] && info.papiroOK){
 	tablero.drawImage(fondo.imagen,0,0);
 	tablero.drawImage(info.papiro,100,50);
-	if (c==1){
-	tablero.drawImage(info.mod1,100,50);	
-	}
-	else if (c==2){
-	tablero.drawImage(info.mod2,100,50);
+	tablero.drawImage(info.mod[c],100,50);	
+	if (c==8){
+	info.contintr=7;		
+	};	
+};
+
+};
+
+
+function infoinverter(c) {
+
+if (fondo.fondoOK && info.invOK[1] && info.invOK[2] && info.invOK[3] && info.papiroOK){
+	tablero.drawImage(fondo.imagen,0,0);
+	tablero.drawImage(info.papiro,100,50);
+	tablero.drawImage(info.inv[c],100,50);	
+	if (c==3){
+	info.contintr=2;		
+	};	
+};
+
+};
+
+function infocenter(c) {
+
+if (fondo.fondoOK && info.centerOK[1] && info.centerOK[2] && info.papiroOK){
+	tablero.drawImage(fondo.imagen,0,0);
+	tablero.drawImage(info.papiro,100,50);
+	tablero.drawImage(info.center[c],100,50);	
+	if (c==2){
 	info.contintr=1;		
 	};	
-	
 };
 
 };
 
 
+function infometeo(c) {
 
+if (fondo.fondoOK && info.meteoOK && info.papiroOK){
+	tablero.drawImage(fondo.imagen,0,0);
+	tablero.drawImage(info.papiro,100,50);
+	tablero.drawImage(info.meteo,100,50);	
+	info.contintr=0;		
+		
+};
 
+};
+
+function infolinea(c) {
+
+if (fondo.fondoOK && info.lineaOK && info.papiroOK){
+	tablero.drawImage(fondo.imagen,0,0);
+	tablero.drawImage(info.papiro,100,50);
+	tablero.drawImage(info.linea,100,50);	
+	info.contintr=0;		
+		
+};
+
+};
 
 
 // abajo se dibujan todos los comentarios de los límites
