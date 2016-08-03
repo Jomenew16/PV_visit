@@ -9,6 +9,8 @@ var fondo = {
 
 
 var info = {
+	papiroOK: false,
+	papiroURL: "Imagenes/Info/Papiro.png",
 	modOK: false,
 	modURL: "Imagenes/Info/Modulest1.png",
 	mod2OK: false,
@@ -190,6 +192,10 @@ function confirmarinfo2 () {
 info.Mod2OK=true;
 };
 
+function confirmarpapiro () {
+info.papiroOK=true;
+};
+
 function confirmarbociz1 () {
 bocadillo.izdaOK=true;
 };
@@ -297,6 +303,10 @@ info.mod2 = new Image();
 info.mod2.src = info.mod2URL;
 info.mod2.onload = confirmarinfo2;
 
+info.papiro = new Image();
+info.papiro.src = info.papiroURL;
+info.papiro.onload = confirmarpapiro;
+
 bocadillo.izda = new Image();
 bocadillo.izda.src = bocadillo.izdaURL;
 bocadillo.izda.onload = confirmarbociz1;
@@ -364,8 +374,9 @@ sprite.OK=true;
 
 function dibujarpapiro(c) {
 
-if (fondo.fondoOK && info.ModOK && info.Mod2OK){
+if (fondo.fondoOK && info.ModOK && info.Mod2OK && info.papiroOK){
 	tablero.drawImage(fondo.imagen,0,0);
+	tablero.drawImage(info.papiro,100,50);
 	if (c==1){
 	tablero.drawImage(info.mod1,100,50);	
 	}
