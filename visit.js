@@ -15,12 +15,16 @@ var info = {
 	modOK: new Array(8),
 	inv: new Array(3),
 	invOK: new Array(3),
+	civ: new Array(3),
+	civOK: new Array(3),
 	center: new Array(2),
 	centerOK: new Array(2),
 	meteoOK:false,
 	meteoURL: "Imagenes/Info/Meteo1.png",
 	lineaOK:false,
 	lineaURL: "Imagenes/Info/Infraestructuras1.png",
+	estrOK:false,
+	estrURL: "Imagenes/Info/Structures1.png",
 	//modOK: false,
 	//modURL: "Imagenes/Info/Modulest1.png",
 	//mod2OK: false,
@@ -38,7 +42,9 @@ var bocadillo = {
 	dchaOK: false,
 	dchaURL: "Imagenes/Info/Tomorrow.png",
 	abajoOK: false,
-	abajoURL: "Imagenes/Info/Go.png"
+	abajoURL: "Imagenes/Info/Go.png",
+	civOK: false,
+	civURL: "Imagenes/Info/Whats.png"
 
 }
 
@@ -79,11 +85,15 @@ var Obstaculo = function (ymax, ymin, xmax, xmin)
 
 var Mod1 = new Obstaculo (103,130,598,189);
 var Mod1Acc= new Obstaculo (129,131, 550, 230);
+var Est1Acc= new Obstaculo (90,104, 550, 230);
 var Mod2 = new Obstaculo (232,262,616,207);
 var Mod2Acc= new Obstaculo (261,280, 616, 207);
+var Est2Acc= new Obstaculo (220,233, 616, 207);
 var Mod3 = new Obstaculo (367,397,597,189);
 var Mod3Acc= new Obstaculo (396,405, 500, 289);
+var Est3Acc= new Obstaculo (355,367, 500, 289);
 var Mod4 = new Obstaculo (500,533,616,207);
+var Est4Acc = new Obstaculo (485,501,616,207);
 var Meteo = new Obstaculo (458,488,148,134);
 var MeteoAcc = new Obstaculo (448,498,158,124);
 var Linea = new Obstaculo (0,90,710,623);
@@ -100,7 +110,7 @@ var Bordiz2 = new Obstaculo (0,165,150,0);
 var Bordsup = new Obstaculo (-20,-10,835,0);
 var Bordch = new Obstaculo (0,600,835,834);
 var Bordinf = new Obstaculo (599,600,835,0);
-//var CivAcc = new Obstaculo (167,238,314,267);
+var CivAcc = new Obstaculo (200,238,314,267);
 
  
 
@@ -137,7 +147,7 @@ function asignar (){
 	
 	// asignamos URL a los sprites
 	for (i=0; i<3; i++){
-		
+		var m = i+1;
 		sprite.frenteOK[i]=false;
 		sprite.frente[i]= new Image();
 		sprite.frente[i].src="Imagenes/Sprite/Frente"+i+".png";
@@ -153,6 +163,10 @@ function asignar (){
 		sprite.izdaOK[i]=false;
 		sprite.izda[i]= new Image();
 		sprite.izda[i].src="Imagenes/Sprite/Izda"+i+".png";
+
+		info.civOK[m]=false;
+		info.civ[m]=new Image();
+		info.civ[m].src="Imagenes/Info/CWorkst"+m+".png";
 
 	};
 
@@ -209,6 +223,10 @@ info.mod[8].onload= function(){ info.modOK[8]=true;};
 info.inv[1].onload= function(){ info.invOK[1]=true;};
 info.inv[2].onload= function(){ info.invOK[2]=true;};
 info.inv[3].onload= function(){ info.invOK[3]=true;};
+
+info.civ[1].onload= function(){ info.civOK[1]=true;};
+info.civ[2].onload= function(){ info.civOK[2]=true;};
+info.civ[3].onload= function(){ info.civOK[3]=true;};
 
 info.center[1].onload= function(){ info.centerOK[1]=true;};
 info.center[2].onload= function(){ info.centerOK[2]=true;};
@@ -276,6 +294,14 @@ function confirmarbocab () {
 bocadillo.abajoOK=true;
 };
 
+function confirmarbocciv () {
+bocadillo.civOK=true;
+};
+
+function confirmarstr () {
+info.estrOK=true;
+};
+
 
 
 function teclado (datos){
@@ -316,6 +342,7 @@ var posy=sprite.y;
 	sprite.x=posx;
 	sprite.y=posy;
 	dibujar(spritedibujo);
+
 	}
 	else if (!Bordiz1.check(posx,posy)){
 	dibujarlimizdo1(spritedibujo);
@@ -368,6 +395,21 @@ if (codigo==teclas.INTRO && (!LineaAcc.check(posx,posy))){
 	//infoinverter(info.contintr);
 };
 
+if (codigo==teclas.INTRO && (!CivAcc.check(posx,posy))){
+	info.contintr =info.contintr+1;
+	infocivi(info.contintr);
+	//infocenter(info.contintr);
+	//infoinverter(info.contintr);
+};
+
+if (codigo==teclas.INTRO && (!Est1Acc.check(posx,posy) || !Est2Acc.check(posx,posy) || !Est3Acc.check(posx,posy) || !Est4Acc.check(posx,posy))){
+	info.contintr =info.contintr+1;
+	infostr(info.contintr);
+	//infocenter(info.contintr);
+	//infoinverter(info.contintr);
+};
+
+
 
 };
 
@@ -389,6 +431,9 @@ info.linea = new Image();
 info.linea.src = info.lineaURL;
 info.linea.onload = confirmarlinea;
 
+info.estr= new Image();
+info.estr.src = info.estrURL;
+info.estr.onload = confirmarstr;
 //info.mod2 = new Image();
 //info.mod2.src = info.mod2URL;
 //info.mod2.onload = confirmarinfo2;
@@ -409,7 +454,6 @@ bocadillo.arriba = new Image();
 bocadillo.arriba.src = bocadillo.arribaURL;
 bocadillo.arriba.onload = confirmarbocarrib;
 
-
 bocadillo.dcha = new Image();
 bocadillo.dcha.src = bocadillo.dchaURL;
 bocadillo.dcha.onload = confirmarbocdch;
@@ -417,6 +461,12 @@ bocadillo.dcha.onload = confirmarbocdch;
 bocadillo.abajo= new Image();
 bocadillo.abajo.src = bocadillo.abajoURL;
 bocadillo.abajo.onload = confirmarbocab;
+
+bocadillo.civ= new Image();
+bocadillo.civ.src = bocadillo.civURL;
+bocadillo.civ.onload = confirmarbocciv;
+
+
 
 
 //asigno y cargo las imagenes
@@ -450,6 +500,9 @@ verificarimagenes();
 if (sprite.OK == true) {
 	tablero.drawImage(fondo.imagen,0,0);
 	tablero.drawImage(personaje, sprite.x, sprite.y);
+	if (!CivAcc.check(sprite.x,sprite.y)) {
+		tablero.drawImage(bocadillo.civ,sprite.x + 5,sprite.y -170);
+	};
 };
 
 sprite.OK=true;
@@ -522,6 +575,35 @@ if (fondo.fondoOK && info.lineaOK && info.papiroOK){
 	tablero.drawImage(info.papiro,100,50);
 	tablero.drawImage(info.linea,100,50);	
 	info.contintr=0;		
+		
+};
+
+};
+
+function infostr(c) {
+
+if (fondo.fondoOK && info.estrOK && info.papiroOK){
+	tablero.drawImage(fondo.imagen,0,0);
+	tablero.drawImage(info.papiro,100,50);
+	tablero.drawImage(info.estr,100,50);	
+	info.contintr=0;		
+		
+};
+
+};
+
+
+
+
+function infocivi(c) {
+
+if (fondo.fondoOK && info.civOK && info.papiroOK){
+	tablero.drawImage(fondo.imagen,0,0);
+	tablero.drawImage(info.papiro,100,50);
+	tablero.drawImage(info.civ[c],100,50);	
+	if (c==3){
+	info.contintr=2;		
+	};			
 		
 };
 
