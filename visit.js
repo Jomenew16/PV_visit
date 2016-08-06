@@ -19,16 +19,15 @@ var info = {
 	civOK: new Array(3),
 	center: new Array(2),
 	centerOK: new Array(2),
+	direccion: new Array(4),
+	direccionOK: new Array(4),
+	dirOK:false,
 	meteoOK:false,
 	meteoURL: "Imagenes/Info/Meteo1.png",
 	lineaOK:false,
 	lineaURL: "Imagenes/Info/Infraestructuras1.png",
 	estrOK:false,
 	estrURL: "Imagenes/Info/Structures1.png",
-	//modOK: false,
-	//modURL: "Imagenes/Info/Modulest1.png",
-	//mod2OK: false,
-	//mod2URL: "Imagenes/Info/Modulest2.png",
 	contintr: 0
 };
 
@@ -61,7 +60,7 @@ var sprite = {
 	atrasOK:new Array(3),
 	izda :new Array(3),
 	izdaOK:new Array(3),
-	//Ok: false
+	
 };
 
  var teclas =
@@ -194,22 +193,29 @@ function asignar (){
 	 	
 	 };
 
+	 for (n=1; n<5; n++){
+	 	info.direccionOK[n]=false;
+	 	info.direccion[n]= new Image();
+	 	info.direccion[n].src= "Imagenes/Layout/Arrow"+n+".png";
+	 	
+	 };
+
 //confirmo carga de imagenes
-sprite.frente[0].onload=function(){	sprite.frenteOK[0]=true;dibujar();};
-sprite.frente[1].onload=function(){	sprite.frenteOK[1]=true;};
-sprite.frente[2].onload=function(){	sprite.frenteOK[2]=true;};
+sprite.frente[0].onload=function(){	sprite.frenteOK[0]=true;dibujarportada();};
+sprite.frente[1].onload=function(){	sprite.frenteOK[1]=true;dibujarportada();};
+sprite.frente[2].onload=function(){	sprite.frenteOK[2]=true;dibujarportada();};
 
-sprite.dcha[0].onload=function(){	sprite.dchaOK[0]=true;};
-sprite.dcha[1].onload=function(){	sprite.dchaOK[1]=true;};
-sprite.dcha[2].onload=function(){	sprite.dchaOK[2]=true;};
+sprite.dcha[0].onload=function(){	sprite.dchaOK[0]=true;dibujarportada();};
+sprite.dcha[1].onload=function(){	sprite.dchaOK[1]=true;dibujarportada();};
+sprite.dcha[2].onload=function(){	sprite.dchaOK[2]=true;dibujarportada();};
 
-sprite.atras[0].onload=function(){	sprite.atrasOK[0]=true;};
-sprite.atras[1].onload=function(){	sprite.atrasOK[1]=true;};
-sprite.atras[2].onload=function(){	sprite.atrasOK[2]=true;};
+sprite.atras[0].onload=function(){	sprite.atrasOK[0]=true;dibujarportada();};
+sprite.atras[1].onload=function(){	sprite.atrasOK[1]=true;dibujarportada();};
+sprite.atras[2].onload=function(){	sprite.atrasOK[2]=true;dibujarportada();};
 
-sprite.izda[0].onload=function(){	sprite.izdaOK[0]=true;};
-sprite.izda[1].onload=function(){	sprite.izdaOK[1]=true;};
-sprite.izda[2].onload=function(){	sprite.izdaOK[2]=true;};
+sprite.izda[0].onload=function(){	sprite.izdaOK[0]=true;dibujarportada();};
+sprite.izda[1].onload=function(){	sprite.izdaOK[1]=true;dibujarportada();};
+sprite.izda[2].onload=function(){	sprite.izdaOK[2]=true;dibujarportada();};
 
 info.mod[1].onload= function(){ info.modOK[1]=true;};
 info.mod[2].onload= function(){ info.modOK[2]=true;};
@@ -230,6 +236,12 @@ info.civ[3].onload= function(){ info.civOK[3]=true;};
 
 info.center[1].onload= function(){ info.centerOK[1]=true;};
 info.center[2].onload= function(){ info.centerOK[2]=true;};
+
+info.direccion[1].onload= function(){ info.direccionOK[1]=true;dibujarportada();};
+info.direccion[2].onload= function(){ info.direccionOK[2]=true;dibujarportada();};
+info.direccion[3].onload= function(){ info.direccionOK[3]=true;dibujarportada();};
+info.direccion[4].onload= function(){ info.direccionOK[4]=true;dibujarportada();};
+
 
 };
 
@@ -256,7 +268,7 @@ var pasos = caminar();
 
 function confirmarfondo () {
 fondo.fondoOK=true;
-dibujar();
+//dibujar();
 }
 
 function confirmarmeteo () {
@@ -308,11 +320,11 @@ function teclado (datos){
 
 var codigo = datos.keyCode;
 var spritedibujo= sprite.frente[0];
-
 var posx=sprite.x;
 var posy=sprite.y;
 
-
+clearInterval(intervalo);
+dibujar(spritedibujo);
 
 	if (codigo==teclas.UP){
 		spritedibujo = sprite.atras[pasos()];
@@ -472,6 +484,7 @@ bocadillo.civ.onload = confirmarbocciv;
 //asigno y cargo las imagenes
 asignar();
 
+dibujarportada();
 // primer movimiento
 document.addEventListener("keydown",teclado);
 
@@ -479,12 +492,104 @@ document.addEventListener("keydown",teclado);
 
 };
 
+var intervalo;
+var cont=0;
+var posicion=1;
+
+function muestraintrod(){
+
+	if (posicion ==1){
+		if (cont<=10){
+			tablero.drawImage(info.direccion[posicion], 500,100)
+			tablero.drawImage(sprite.frente[pasos()],150,100);
+			cont = cont+1;
+			}
+			else {
+				
+				//clearInterval(intervalo);
+				cont=0;
+				posicion=2;
+			};
+	}
+	else if (posicion ==2){
+		if (cont<=10){
+			tablero.drawImage(info.direccion[posicion], 500,100)
+			tablero.drawImage(sprite.dcha[pasos()],150,100);
+			cont = cont+1;
+			}
+			else {
+				
+				//clearInterval(intervalo);
+				cont=0;
+				posicion=3;
+			};
+		}
+	else if (posicion ==3){
+		if (cont<=10){
+			tablero.drawImage(info.direccion[posicion], 500,100)
+			tablero.drawImage(sprite.atras[pasos()],150,100);
+			cont = cont+1;
+			}
+			else {
+				
+				//clearInterval(intervalo);
+				cont=0;
+				posicion=4;
+			};
+		}
+	else {
+		if (cont<=10){
+			tablero.drawImage(info.direccion[posicion], 500,100)
+			tablero.drawImage(sprite.izda[pasos()],150,100);
+			cont = cont+1;
+			}
+			else {
+				
+				//clearInterval(intervalo);
+				cont=0;
+				posicion=1;
+			};
+		};
+
+	
+};
+
+
+
+function dibujarportada(){
+//verifica que el sprite y las direcciones están cargadas y devuelve imagenesOK y SpriteOK
+verificarimagenes();
+
+
+
+if (sprite.OK && info.dirOK){
+			
+	intervalo=setInterval(function(){muestraintrod()},300);
+		//alert("dibujo algo?");
+		//console.log(info.direccion[i]);
+
+	
+};
+
+}
+
 function verificarimagenes(){
+	sprite.OK=true;
+	info.dirOK=true;
 	for (i=0; i<3;i++){
 		if (!sprite.frenteOK[i] || !sprite.dchaOK[i] || !sprite.izdaOK[i] || !sprite.atrasOK[i]){
 			sprite.OK=false;
 		};
 	};
+
+	for (j=1; j<5;j++){
+		if (!info.direccionOK[j]){
+			info.dirOK=false;
+		};
+	};
+
+
+
 };
 
 function dibujar (personaje) {
