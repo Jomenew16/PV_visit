@@ -26,6 +26,8 @@ var info = {
 	meteoURL: "Imagenes/Info/Meteo1.png",
 	lineaOK:false,
 	lineaURL: "Imagenes/Info/Infraestructuras1.png",
+	inicioOK: false,
+	inicioURL: "Imagenes/Layout/Inicio.png",
 	estrOK:false,
 	estrURL: "Imagenes/Info/Structures1.png",
 	contintr: 0
@@ -85,9 +87,9 @@ var Obstaculo = function (ymax, ymin, xmax, xmin)
 var Mod1 = new Obstaculo (103,130,598,189);
 var Mod1Acc= new Obstaculo (129,131, 550, 230);
 var Est1Acc= new Obstaculo (90,104, 550, 230);
-var Mod2 = new Obstaculo (232,262,616,207);
+var Mod2 = new Obstaculo (234,262,616,207);
 var Mod2Acc= new Obstaculo (261,280, 616, 207);
-var Est2Acc= new Obstaculo (220,233, 616, 207);
+var Est2Acc= new Obstaculo (220,235, 616, 320);
 var Mod3 = new Obstaculo (367,397,597,189);
 var Mod3Acc= new Obstaculo (396,405, 500, 289);
 var Est3Acc= new Obstaculo (355,367, 500, 289);
@@ -100,7 +102,7 @@ var LineaAcc = new Obstaculo (0,100,720,613);
 var Arbol = new Obstaculo (99,163,769,711);
 var Inv1 = new Obstaculo (166,190,738,684);
 var Inv1Acc =new Obstaculo (156,200,748,674)
-var Caset = new Obstaculo (279,328,829,730);
+var Caset = new Obstaculo (279,328,829,740);
 var CasetAcc = new Obstaculo (269,338,839,720);
 var Inv2 = new Obstaculo (435,459,763,709);
 var Inv2Acc = new Obstaculo (425,469,773,699);
@@ -314,6 +316,10 @@ function confirmarstr () {
 info.estrOK=true;
 };
 
+function confirmarinicio () {
+info.inicioOK=true;
+};
+
 
 
 function teclado (datos){
@@ -324,7 +330,8 @@ var posx=sprite.x;
 var posy=sprite.y;
 
 clearInterval(intervalo);
-dibujar(spritedibujo);
+
+//dibujar(spritedibujo);
 
 	if (codigo==teclas.UP){
 		spritedibujo = sprite.atras[pasos()];
@@ -446,6 +453,10 @@ info.linea.onload = confirmarlinea;
 info.estr= new Image();
 info.estr.src = info.estrURL;
 info.estr.onload = confirmarstr;
+
+info.inicio= new Image();
+info.inicio.src = info.inicioURL;
+info.inicio.onload = confirmarinicio;
 //info.mod2 = new Image();
 //info.mod2.src = info.mod2URL;
 //info.mod2.onload = confirmarinfo2;
@@ -496,62 +507,42 @@ var intervalo;
 var cont=0;
 var posicion=1;
 
+
+//Animación de la introducción
 function muestraintrod(){
 
-	if (posicion ==1){
+var spriteport= new Array (3);
+
+
+if (posicion==1){
+	spriteport=sprite.frente;
+}
+else if (posicion==2){
+	spriteport=sprite.dcha;
+}
+else if (posicion==3){
+	spriteport=sprite.atras;
+}
+else if (posicion==4){
+	spriteport=sprite.izda;
+}
+
+	
 		if (cont<=10){
-			tablero.drawImage(info.direccion[posicion], 500,100)
-			tablero.drawImage(sprite.frente[pasos()],150,100);
+			tablero.drawImage(info.inicio, 0,0);
+			tablero.drawImage(info.direccion[posicion], 150,230);
+			tablero.drawImage(spriteport[pasos()],520, 325);
 			cont = cont+1;
 			}
-			else {
-				
-				//clearInterval(intervalo);
+			else if (posicion<4){
 				cont=0;
-				posicion=2;
-			};
-	}
-	else if (posicion ==2){
-		if (cont<=10){
-			tablero.drawImage(info.direccion[posicion], 500,100)
-			tablero.drawImage(sprite.dcha[pasos()],150,100);
-			cont = cont+1;
+				posicion=posicion+1;
 			}
-			else {
-				
-				//clearInterval(intervalo);
-				cont=0;
-				posicion=3;
-			};
-		}
-	else if (posicion ==3){
-		if (cont<=10){
-			tablero.drawImage(info.direccion[posicion], 500,100)
-			tablero.drawImage(sprite.atras[pasos()],150,100);
-			cont = cont+1;
-			}
-			else {
-				
-				//clearInterval(intervalo);
-				cont=0;
-				posicion=4;
-			};
-		}
-	else {
-		if (cont<=10){
-			tablero.drawImage(info.direccion[posicion], 500,100)
-			tablero.drawImage(sprite.izda[pasos()],150,100);
-			cont = cont+1;
-			}
-			else {
-				
-				//clearInterval(intervalo);
+			else if (posicion==4){
 				cont=0;
 				posicion=1;
 			};
-		};
-
-	
+			
 };
 
 
@@ -560,15 +551,11 @@ function dibujarportada(){
 //verifica que el sprite y las direcciones están cargadas y devuelve imagenesOK y SpriteOK
 verificarimagenes();
 
-
-
-if (sprite.OK && info.dirOK){
+//si las imagenes estan cargadas, hago que se dibujen en intervalos de 200 milisegundos
+if (sprite.OK && info.dirOK && info.inicioOK){
 			
-	intervalo=setInterval(function(){muestraintrod()},300);
-		//alert("dibujo algo?");
-		//console.log(info.direccion[i]);
+	intervalo=setInterval(function(){muestraintrod()},200);
 
-	
 };
 
 }
