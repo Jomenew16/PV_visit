@@ -1,0 +1,21 @@
+{
+  "name": "pvvisit",
+  "version": "0.1.0",
+  "description": "Aplicacion educativa de visita interactiva a una planta fotovoltaica",
+  "main": "visit.js",
+  "dependencies": {
+    "express": "^4.14.0",
+    "touchy": "^0.1.6"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "educacional",
+    "PV",
+    "visita"
+  ],
+  "author": "jorge melero",
+  "license": "ISC"
+}

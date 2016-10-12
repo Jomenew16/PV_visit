@@ -1,4 +1,10 @@
+//var touchy = require('touchy');
+//touchy.enableOn(document);
 
+//var ele = document.querySelector('#selector');
+//ele.on('tap', function (e) {
+//  console.log('tap!');
+//});
 
 var tablero;
 var fondo = {
@@ -45,8 +51,11 @@ var bocadillo = {
 	abajoOK: false,
 	abajoURL: "Imagenes/Info/Go.png",
 	civOK: false,
-	civURL: "Imagenes/Info/Whats.png"
-
+	civURL: "Imagenes/Info/Whats.png",
+	enter0OK: false,
+	enter0URL: "Imagenes/Layout/Enter.png",
+	enter1OK: false,
+	enter1URL: "Imagenes/Layout/Enter.png" 
 }
 
 var sprite = {
@@ -320,6 +329,14 @@ function confirmarinicio () {
 info.inicioOK=true;
 };
 
+function confirmarenter0 () {
+bocadillo.enter0OK=true;
+};
+
+function confirmarenter1 () {
+bocadillo.enter1OK=true;
+};
+
 
 
 function teclado (datos){
@@ -489,6 +506,16 @@ bocadillo.civ= new Image();
 bocadillo.civ.src = bocadillo.civURL;
 bocadillo.civ.onload = confirmarbocciv;
 
+bocadillo.enter0= new Image();
+bocadillo.enter0.src = bocadillo.enter0URL;
+bocadillo.enter0.onload= confirmarenter0; 
+
+bocadillo.enter1= new Image();
+bocadillo.enter1.src = bocadillo.enter1URL;
+bocadillo.enter1.onload= confirmarenter1; 
+	
+
+
 
 
 
@@ -530,8 +557,8 @@ else if (posicion==4){
 	
 		if (cont<=10){
 			tablero.drawImage(info.inicio, 0,0);
-			tablero.drawImage(info.direccion[posicion], 150,230);
-			tablero.drawImage(spriteport[pasos()],520, 325);
+			tablero.drawImage(info.direccion[posicion], 170,230);
+			tablero.drawImage(spriteport[pasos()],540, 325);
 			cont = cont+1;
 			}
 			else if (posicion<4){
