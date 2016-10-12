@@ -53,9 +53,9 @@ var bocadillo = {
 	civOK: false,
 	civURL: "Imagenes/Info/Whats.png",
 	enter0OK: false,
-	enter0URL: "Imagenes/Layout/Enter.png",
+	enter0URL: "Imagenes/Layout/Press0.png",
 	enter1OK: false,
-	enter1URL: "Imagenes/Layout/Enter.png" 
+	enter1URL: "Imagenes/Layout/Press1.png" 
 }
 
 var sprite = {
@@ -149,7 +149,15 @@ function comprobarObstaculos (x,y){
 	var check= Mod1.check(x,y) * Mod2.check(x,y)* Mod3.check(x,y)* Mod4.check(x,y)* Meteo.check(x,y)*Linea.check(x,y)*Arbol.check(x,y)*Inv1.check(x,y)*Caset.check(x,y)*Inv2.check(x,y)*Bordiz1.check(x,y)*Bordiz2.check(x,y)*Bordsup.check(x,y)*Bordch.check(x,y)*Bordinf.check(x,y);
 	
 	return check;
-}
+};
+
+function comprobarAccion (x,y){
+	var check= Mod1Acc.check(x,y) * Mod2Acc.check(x,y)* Mod3Acc.check(x,y)* MeteoAcc.check(x,y)*LineaAcc.check(x,y)*Inv1Acc.check(x,y)*CasetAcc.check(x,y)*Inv2Acc.check(x,y)*CivAcc.check(x,y);
+	
+	return check;
+};
+
+
 
 
 	// Asigno las URL de las distintas imagenes de frente, dcha, izda t atras y pongo todos los arrays en falso
@@ -515,7 +523,7 @@ bocadillo.enter1.src = bocadillo.enter1URL;
 bocadillo.enter1.onload= confirmarenter1; 
 	
 
-
+	
 
 
 
@@ -616,11 +624,17 @@ function dibujar (personaje) {
 
 verificarimagenes();
 
+
+
 if (sprite.OK == true) {
 	tablero.drawImage(fondo.imagen,0,0);
 	tablero.drawImage(personaje, sprite.x, sprite.y);
 	if (!CivAcc.check(sprite.x,sprite.y)) {
 		tablero.drawImage(bocadillo.civ,sprite.x + 5,sprite.y -170);
+	};
+	if (!comprobarAccion(sprite.x,sprite.y)){
+		tablero.drawImage(bocadillo.enter0, 600, 100);
+		console.log(!comprobarAccion(sprite.x,sprite.y));
 	};
 };
 
