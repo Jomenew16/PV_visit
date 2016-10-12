@@ -152,7 +152,7 @@ function comprobarObstaculos (x,y){
 };
 
 function comprobarAccion (x,y){
-	var check= Mod1Acc.check(x,y) * Mod2Acc.check(x,y)* Mod3Acc.check(x,y)* MeteoAcc.check(x,y)*LineaAcc.check(x,y)*Inv1Acc.check(x,y)*CasetAcc.check(x,y)*Inv2Acc.check(x,y)*CivAcc.check(x,y);
+	var check= Mod1Acc.check(x,y) * Mod2Acc.check(x,y)* Mod3Acc.check(x,y)*Est1Acc.check(x,y)*Est2Acc.check(x,y)*Est3Acc.check(x,y)*Est4Acc.check(x,y)* MeteoAcc.check(x,y)*LineaAcc.check(x,y)*Inv1Acc.check(x,y)*CasetAcc.check(x,y)*Inv2Acc.check(x,y)*CivAcc.check(x,y);
 	
 	return check;
 };
