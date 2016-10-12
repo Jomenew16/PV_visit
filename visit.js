@@ -355,7 +355,7 @@ var posx=sprite.x;
 var posy=sprite.y;
 
 clearInterval(intervalo);
-
+clearInterval(pulso);
 //dibujar(spritedibujo);
 
 	if (codigo==teclas.UP){
@@ -402,6 +402,9 @@ clearInterval(intervalo);
 	}
 	else if (!Bordinf.check(posx,posy)){
 	dibujarliminf(spritedibujo);
+	}
+	else if (!comprobarObstaculos(posx,posy)){
+	dibujar(spritedibujo);		
 	};
 
 
@@ -541,7 +544,7 @@ document.addEventListener("keydown",teclado);
 var intervalo;
 var cont=0;
 var posicion=1;
-
+var pulso;
 
 //Animación de la introducción
 function muestraintrod(){
@@ -614,6 +617,47 @@ function verificarimagenes(){
 
 };
 
+//function caminar(){
+//var paso=0;
+
+//	function unpaso (){
+//		if (paso==2){
+//			paso=0;
+//		}
+//		else {
+//			paso = paso + 1;
+			
+//		}
+		//alert("llevo"+" "+paso);
+//		return paso;
+//	}
+
+//	return unpaso;
+//};
+//var pasos = caminar();
+
+var cpulsos=0;
+
+function dibujapulsos(personaje){
+	
+	tablero.drawImage(fondo.imagen,0,0);
+	tablero.drawImage(personaje, sprite.x, sprite.y);
+	if (!CivAcc.check(sprite.x,sprite.y)) {
+		tablero.drawImage(bocadillo.civ,sprite.x + 5,sprite.y -170);
+	};
+	
+	if (cpulsos==0){
+	tablero.drawImage(bocadillo.enter0, 700, 50);	
+	cpulsos=1
+	}
+	else{
+	tablero.drawImage(bocadillo.enter1, 700, 50);		
+	cpulsos=0
+	}
+
+
+};
+
 function dibujar (personaje) {
 	if (fondo.fondoOK && sprite.frenteOK[0])
 		{
@@ -632,9 +676,11 @@ if (sprite.OK == true) {
 	if (!CivAcc.check(sprite.x,sprite.y)) {
 		tablero.drawImage(bocadillo.civ,sprite.x + 5,sprite.y -170);
 	};
-	if (!comprobarAccion(sprite.x,sprite.y)){
-		tablero.drawImage(bocadillo.enter0, 600, 100);
-		console.log(!comprobarAccion(sprite.x,sprite.y));
+	if ((!comprobarAccion(sprite.x,sprite.y))&&bocadillo.enter0OK&&bocadillo.enter1OK){
+
+		tablero.drawImage(bocadillo.enter0, 700, 50);
+		pulso=setInterval(function(){dibujapulsos(personaje)},300);
+			
 	};
 };
 
