@@ -82,7 +82,8 @@ var sprite = {
 	RIGHT: 39,
 	INTRO: 13,
 	ESC: 27,
-	DEL: 8
+	DEL: 8,
+	Touch: 0
 };
 
 var Obstaculo = function (ymax, ymin, xmax, xmin)
@@ -345,11 +346,15 @@ function confirmarenter1 () {
 bocadillo.enter1OK=true;
 };
 
-
+var codigo;
 
 function teclado (datos){
+codigo = datos.keyCode;
+teclas.Touch=0;	
+accion();
+};
 
-var codigo = datos.keyCode;
+function accion () {
 var spritedibujo= sprite.frente[0];
 var posx=sprite.x;
 var posy=sprite.y;
@@ -357,34 +362,42 @@ var posy=sprite.y;
 clearInterval(intervalo);
 clearInterval(pulso);
 //dibujar(spritedibujo);
+if ((teclas.Touch !=0)){
+	sprite.velocidad = 4;
+}
+else {
+	sprite.velocidad = 10;
+};
 
-	if (codigo==teclas.UP){
-		spritedibujo = sprite.atras[pasos()];
+	if ((codigo==teclas.UP) || (teclas.Touch==teclas.UP)){
 		
+		spritedibujo = sprite.atras[pasos()];
 		//spritedibujo=sprite.atras[0];
 		posy-=sprite.velocidad;
 	};
 
-	if (codigo==teclas.DOWN){
+	if ((codigo==teclas.DOWN) || (teclas.Touch==teclas.DOWN)){
 		spritedibujo=sprite.frente[pasos()];
 		posy+=sprite.velocidad;
 	};
-	if (codigo == teclas.LEFT){
+	if ((codigo == teclas.LEFT) || (teclas.Touch==teclas.LEFT)){
 		posx -= sprite.velocidad
 		spritedibujo=sprite.izda[pasos()];
 	};
-	if (codigo == teclas.RIGHT){
+	if ((codigo == teclas.RIGHT) || (teclas.Touch==teclas.RIGHT)){
 		posx += sprite.velocidad;
 		spritedibujo=sprite.dcha[pasos()];
 };
 
 
 
+
 //comprobar obstaculos es la función que me devuelve falso si estamos dentro de algún obstaculo
-	if (comprobarObstaculos(posx,posy) && (codigo!=teclas.INTRO)){
+	if (comprobarObstaculos(posx,posy) && (codigo!=teclas.INTRO) && (teclas.Touch!=teclas.INTRO)){
 	info.contintr=0;
 	sprite.x=posx;
 	sprite.y=posy;
+	
 	dibujar(spritedibujo);
 
 	}
@@ -404,53 +417,61 @@ clearInterval(pulso);
 	dibujarliminf(spritedibujo);
 	}
 	else if (!comprobarObstaculos(posx,posy)){
+	
 	dibujar(spritedibujo);		
 	};
 
 
 // Vamos a desatar acciones. 
-if (codigo==teclas.INTRO && (!Mod1Acc.check(posx,posy) || !Mod2Acc.check(posx,posy) || !Mod3Acc.check(posx,posy))){
+if ((codigo==teclas.INTRO || teclas.Touch==teclas.INTRO) && (!Mod1Acc.check(posx,posy) || !Mod2Acc.check(posx,posy) || !Mod3Acc.check(posx,posy))){
 	info.contintr =info.contintr+1;
+	teclas.Touch = 0;
 	infomodulo(info.contintr);
 	//console.log(info.contintr);
 };
 
-if (codigo==teclas.INTRO && (!Inv1Acc.check(posx,posy) || !Inv2Acc.check(posx,posy))){
+if ((codigo==teclas.INTRO || teclas.Touch==teclas.INTRO) && (!Inv1Acc.check(posx,posy) || !Inv2Acc.check(posx,posy))){
 	info.contintr =info.contintr+1;
+	teclas.Touch = 0;
 	infoinverter(info.contintr);
 	//console.log(info.contintr);
 };
 
-if (codigo==teclas.INTRO && (!CasetAcc.check(posx,posy))){
+if ((codigo==teclas.INTRO || teclas.Touch==teclas.INTRO) && (!CasetAcc.check(posx,posy))){
 	info.contintr =info.contintr+1;
+	teclas.Touch = 0;
 	infocenter(info.contintr);
 	//infoinverter(info.contintr);
 	
 };
 
-if (codigo==teclas.INTRO && (!MeteoAcc.check(posx,posy))){
+if ((codigo==teclas.INTRO || teclas.Touch==teclas.INTRO) && (!MeteoAcc.check(posx,posy))){
 	info.contintr =info.contintr+1;
+	teclas.Touch = 0;
 	infometeo(info.contintr);
 	//infocenter(info.contintr);
 	//infoinverter(info.contintr);
 };
 
-if (codigo==teclas.INTRO && (!LineaAcc.check(posx,posy))){
+if ((codigo==teclas.INTRO || teclas.Touch==teclas.INTRO) && (!LineaAcc.check(posx,posy))){
 	info.contintr =info.contintr+1;
+	teclas.Touch = 0;
 	infolinea(info.contintr);
 	//infocenter(info.contintr);
 	//infoinverter(info.contintr);
 };
 
-if (codigo==teclas.INTRO && (!CivAcc.check(posx,posy))){
+if ((codigo==teclas.INTRO || teclas.Touch==teclas.INTRO) && (!CivAcc.check(posx,posy))){
 	info.contintr =info.contintr+1;
+	teclas.Touch = 0;
 	infocivi(info.contintr);
 	//infocenter(info.contintr);
 	//infoinverter(info.contintr);
 };
 
-if (codigo==teclas.INTRO && (!Est1Acc.check(posx,posy) || !Est2Acc.check(posx,posy) || !Est3Acc.check(posx,posy) || !Est4Acc.check(posx,posy))){
+if ((codigo==teclas.INTRO || teclas.Touch==teclas.INTRO) && (!Est1Acc.check(posx,posy) || !Est2Acc.check(posx,posy) || !Est3Acc.check(posx,posy) || !Est4Acc.check(posx,posy))){
 	info.contintr =info.contintr+1;
+	teclas.Touch = 0;
 	infostr(info.contintr);
 	//infocenter(info.contintr);
 	//infoinverter(info.contintr);
@@ -461,6 +482,9 @@ if (codigo==teclas.INTRO && (!Est1Acc.check(posx,posy) || !Est2Acc.check(posx,po
 };
 
 function inicio () {
+
+var xIni;
+var yIni;
 
 var canvas = document.getElementById("campo");
 // variable global
@@ -536,8 +560,55 @@ asignar();
 dibujarportada();
 // primer movimiento
 document.addEventListener("keydown",teclado);
+canvas.addEventListener('touchstart', function(event){
+if(event.targetTouches.length == 1) {
+	var touch =event.targetTouches[0];
+	teclas.Touch=teclas.INTRO;
+	codigo=0;
+	xIni = touch.pageX;
+	yIni = touch.pageY;
+	accion();
+}
+},false);
 
+canvas.addEventListener('touchmove', function(e){
+	for (var i=0; i <event.touches.length; i++) {
+		var touch=event.touches[i];
+		teclas.Touch=0;
+		codigo=0;
+		
+		if (Math.abs(touch.pageX-xIni) > Math.abs(touch.pageY-yIni)){
+			if (touch.pageX > xIni){
+				teclas.Touch= teclas.RIGHT
+			}
+			else if( touch.pageX < xIni) {
+				teclas.Touch= teclas.LEFT	
+			}
+		}
+		else if (touch.pageY < yIni) {
+			teclas.Touch = teclas.UP
+		}
+			else {
+			teclas.Touch = teclas.DOWN		
+			};
 
+		//if ((touch.pageX>xIni+30) && (touch.pageY > yIni-5) && (touch.pageY< yIni+5)){
+		//	teclas.Touch=teclas.RIGHT;
+		//}
+		//if ((touch.pageX<xIni-30) && (touch.pageY > yIni-5) && (touch.pageY< yIni+5)){
+		//	teclas.Touch=teclas.LEFT;
+		//}
+		//if ((touch.pageY<yIni-30) && (touch.pageX > xIni-5) && (touch.pageX< xIni+5)){
+		//	teclas.Touch=teclas.UP;
+		//}
+		//if ((touch.pageY>yIni+30) && (touch.pageX > xIni-5) && (touch.pageX< xIni+5)){
+		//	teclas.Touch=teclas.DOWN;
+		//}
+	console.log(teclas.Touch);
+	accion();
+	}
+
+},false);
 
 };
 
